@@ -1,7 +1,7 @@
 {
-  "name": "Plant Families of the world ID app also offline",
-  "short_name": "Family Plant Guide",
-  "description": "Plant Family Database with Search",
+  "name": "Plant Family Guide",
+  "short_name": "Plant Guide",
+  "description": "Plant Family Database with Dynamic Search",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#e8f5e9",
