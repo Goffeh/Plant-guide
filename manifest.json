@@ -1,6 +1,6 @@
 {
-  "name": "Plant Family Guide",
-  "short_name": "Plant Guide",
+  "name": "Plant Families of the world ID app also offline",
+  "short_name": "Family Plant Guide",
   "description": "Plant Family Database with Search",
   "start_url": "./",
   "display": "standalone",
