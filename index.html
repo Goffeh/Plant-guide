@@ -8,12 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Plant Guide">
   <link rel="manifest" href="manifest.json">
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js');
-  }
-</script>
-  <title>Plant Family Guide</title>
+  <title>Plant Families of the world ID app also offline</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
@@ -377,12 +372,12 @@
       <button class="load-btn" onclick="loadCSV()">📊 Load Data</button>
       <button class="save-btn" onclick="saveCSV()">💾 Save for Next Time</button>
       
-      <div class="tip-text">💡 On iPhone: Save to home screen (Share → Add to Home Screen)</div>
+      <div class="tip-text">💡 Works on iPhone & Android • Add to home screen for app-like experience</div>
     </div>
     
     <div id="appScreen" class="hidden">
       <h1>🌿 Plant Family Guide</h1>
-      <div class="subtitle">Dynamic search • <span id="familyCount">0</span> families • Works offline</div>
+      <div class="subtitle">Up to 5 searches per field • <span id="familyCount">0</span> families • Works offline</div>
       
       <button class="reload-btn" onclick="showUpload()">📁 Load Different CSV</button>
       
@@ -414,7 +409,7 @@
             </label>
             <div id="growthInputs">
               <div class="search-input-wrapper">
-                <input type="text" class="search-input" placeholder="trees, shrubs..." oninput="filterFamilies()" data-field="growth" data-index="0">
+                <input type="text" class="search-input" placeholder="trees, shrubs..." oninput="filterFamilies()" data-field="growth">
               </div>
             </div>
           </div>
@@ -426,7 +421,7 @@
             </label>
             <div id="leafInputs">
               <div class="search-input-wrapper">
-                <input type="text" class="search-input" placeholder="opposite, compound..." oninput="filterFamilies()" data-field="leaf" data-index="0">
+                <input type="text" class="search-input" placeholder="opposite, compound..." oninput="filterFamilies()" data-field="leaf">
               </div>
             </div>
           </div>
@@ -438,7 +433,7 @@
             </label>
             <div id="flowerInputs">
               <div class="search-input-wrapper">
-                <input type="text" class="search-input" placeholder="tubular, bisexual..." oninput="filterFamilies()" data-field="flower" data-index="0">
+                <input type="text" class="search-input" placeholder="tubular, bisexual..." oninput="filterFamilies()" data-field="flower">
               </div>
             </div>
           </div>
@@ -450,7 +445,7 @@
             </label>
             <div id="fruitInputs">
               <div class="search-input-wrapper">
-                <input type="text" class="search-input" placeholder="drupes, fleshy..." oninput="filterFamilies()" data-field="fruit" data-index="0">
+                <input type="text" class="search-input" placeholder="drupes, fleshy..." oninput="filterFamilies()" data-field="fruit">
               </div>
             </div>
           </div>
@@ -462,7 +457,7 @@
             </label>
             <div id="distributionInputs">
               <div class="search-input-wrapper">
-                <input type="text" class="search-input" placeholder="Cosmopolitan..." oninput="filterFamilies()" data-field="distribution" data-index="0">
+                <input type="text" class="search-input" placeholder="Cosmopolitan..." oninput="filterFamilies()" data-field="distribution">
               </div>
             </div>
           </div>
@@ -474,7 +469,7 @@
             </label>
             <div id="reproductiveInputs">
               <div class="search-input-wrapper">
-                <input type="text" class="search-input" placeholder="Hermaphroditic..." oninput="filterFamilies()" data-field="reproductive" data-index="0">
+                <input type="text" class="search-input" placeholder="Hermaphroditic..." oninput="filterFamilies()" data-field="reproductive">
               </div>
             </div>
           </div>
@@ -486,7 +481,7 @@
             </label>
             <div id="dispersalInputs">
               <div class="search-input-wrapper">
-                <input type="text" class="search-input" placeholder="Wind, Animals..." oninput="filterFamilies()" data-field="dispersal" data-index="0">
+                <input type="text" class="search-input" placeholder="Wind, Animals..." oninput="filterFamilies()" data-field="dispersal">
               </div>
             </div>
           </div>
@@ -498,13 +493,13 @@
             </label>
             <div id="usesInputs">
               <div class="search-input-wrapper">
-                <input type="text" class="search-input" placeholder="Ornamental, Food..." oninput="filterFamilies()" data-field="uses" data-index="0">
+                <input type="text" class="search-input" placeholder="Ornamental, Food..." oninput="filterFamilies()" data-field="uses">
               </div>
             </div>
           </div>
         </div>
         
-        <div class="tip">💡 Click + to add more search boxes (max 4 per field)</div>
+        <div class="tip">💡 Click + to add up to 5 search boxes per field</div>
       </div>
       
       <div class="results-bar">
@@ -531,6 +526,10 @@
       distribution: 1, reproductive: 1, dispersal: 1, uses: 1
     };
 
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js').catch(() => {});
+    }
+
     function toggleTheme() {
       document.body.classList.toggle('dark-mode');
       const isDark = document.body.classList.contains('dark-mode');
@@ -544,8 +543,8 @@
     }
 
     function addSearchInput(field) {
-      if (searchCounts[field] >= 4) {
-        alert('Maximum 4 search boxes per field');
+      if (searchCounts[field] >= 5) {
+        alert('Maximum 5 search boxes per field');
         return;
       }
       
@@ -555,7 +554,7 @@
       const wrapper = document.createElement('div');
       wrapper.className = 'search-input-wrapper';
       wrapper.innerHTML = `
-        <input type="text" class="search-input" placeholder="Keyword ${index + 1}" oninput="filterFamilies()" data-field="${field}" data-index="${index}">
+        <input type="text" class="search-input" placeholder="Keyword ${index + 1}" oninput="filterFamilies()" data-field="${field}">
         <button class="remove-search-btn" onclick="removeSearchInput(this, '${field}')">×</button>
       `;
       
@@ -780,6 +779,7 @@
       
       container.innerHTML = filtered.map((family, idx) => {
         const isExpanded = expandedCard === idx;
+        
         return `
           <div class="card" onclick="toggleCard(${idx})">
             <div class="card-header">
@@ -793,48 +793,4 @@
               </div>
             </div>
             <div class="card-content">
-              ${family['Common genera'] ? `<div class="detail-row"><span class="detail-label">Genera:</span><span class="detail-value">${family['Common genera']}</span></div>` : ''}
-              ${family['Growth Form'] ? `<div class="detail-row"><span class="detail-label">Growth:</span><span class="detail-value">${family['Growth Form']}</span></div>` : ''}
-              ${isExpanded ? `
-                ${family['Leaf Characteristics'] ? `<div class="detail-row"><span class="detail-label">Leaves:</span><span class="detail-value">${family['Leaf Characteristics']}</span></div>` : ''}
-                ${family['Flower Characteristics'] ? `<div class="detail-row"><span class="detail-label">Flowers:</span><span class="detail-value">${family['Flower Characteristics']}</span></div>` : ''}
-                ${family['Fruit Characteristics'] ? `<div class="detail-row"><span class="detail-label">Fruits:</span><span class="detail-value">${family['Fruit Characteristics']}</span></div>` : ''}
-                ${family.Distribution ? `<div class="detail-row"><span class="detail-label">Distribution:</span><span class="detail-value">${family.Distribution}</span></div>` : ''}
-                ${family['Reproductive Strategy'] ? `<div class="detail-row"><span class="detail-label">Reproduction:</span><span class="detail-value">${family['Reproductive Strategy']}</span></div>` : ''}
-                ${family['Common Dispersal Type'] ? `<div class="detail-row"><span class="detail-label">Dispersal:</span><span class="detail-value">${family['Common Dispersal Type']}</span></div>` : ''}
-                ${family['Two extremes'] ? `<div class="detail-row"><span class="detail-label">Examples:</span><span class="detail-value">${family['Two extremes']}</span></div>` : ''}
-                ${family['Uses/other info'] ? `<div class="detail-row"><span class="detail-label">Uses:</span><span class="detail-value">${family['Uses/other info']}</span></div>` : ''}
-              ` : ''}
-            </div>
-            <div class="expand-hint">${isExpanded ? '▲ Collapse' : '▼ Details'}</div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function toggleCard(idx) {
-      expandedCard = expandedCard === idx ? null : idx;
-      filterFamilies();
-    }
-
-    function clearAll() {
-      document.querySelectorAll('.search-input').forEach(input => input.value = '');
-      expandedCard = null;
-      filterFamilies();
-    }
-
-    window.addEventListener('load', function() {
-      try {
-        const savedCSV = localStorage.getItem('plantCSV');
-        if (savedCSV) {
-          document.getElementById('csvInput').value = savedCSV;
-          const autoLoad = confirm('Found saved data. Load automatically?');
-          if (autoLoad) {
-            loadCSV();
-          }
-        }
-      } catch (e) {}
-    });
-  </script>
-</body>
-</html>
+              ${family['Common genera'] ? `<div class="detail-row"><span class="detail-label">Genera:</span><span
